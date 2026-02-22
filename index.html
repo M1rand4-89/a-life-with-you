@@ -1,31 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Life With You</title>
-    <style>
-        body {
-            background-color: black;
-            color: white;
-            font-family: Arial, sans-serif;
-        }
-        header {
-            background-color: red;
-            padding: 10px;
-            text-align: center;
-        }
-        .content {
-            padding: 20px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uma vida com você</title>
+<style>
+  body {
+    margin:0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #1a1a1a;
+    color: #fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    flex-direction:column;
+  }
+  #login {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  #login input {
+    padding:10px;
+    margin:10px 0;
+    font-size:16px;
+  }
+  #login button {
+    padding:10px 20px;
+    font-size:16px;
+    cursor:pointer;
+  }
+  #site {
+    display:none;
+    text-align:center;
+  }
+  h1 { font-size:3em; margin-bottom:10px;}
+  #contador { font-size:2em; margin-bottom:20px; }
+  .secao { margin:20px 0; }
+  .secao h2 { font-size:2em; margin-bottom:10px; }
+  .secao p { margin:5px 0; }
+</style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to A Life With You</h1>
-    </header>
-    <div class="content">
-        <p>This is your new color scheme. You can now view the site directly without any login requirement.</p>
-    </div>
+
+<div id="login">
+  <h2>Digite a senha</h2>
+  <input type="password" id="senha" placeholder="Senha">
+  <button onclick="verificarSenha()">Entrar</button>
+  <p id="erro" style="color:red;"></p>
+</div>
+
+<div id="site">
+  <h1>Uma vida com você</h1>
+  <div id="contador"></div>
+
+  <div class="secao">
+    <h2>Momentos</h2>
+    <p>Nosso primeiro rolê, nossa risada sem motivo, tudo aqui ❤️</p>
+    <!-- Fotos e textos podem ser adicionados aqui -->
+  </div>
+
+  <div class="secao">
+    <h2>O que ainda vamos viver</h2>
+    <p>Nosso primeiro Natal juntos 🎄</p>
+    <p>Nossa primeira viagem 🌍</p>
+    <p>Jantar surpresa 🍷</p>
+  </div>
+</div>
+
+<script>
+  const senhaCorreta = "2512";
+
+  function verificarSenha() {
+    const input = document.getElementById("senha").value;
+    if(input === senhaCorreta) {
+      document.getElementById("login").style.display = "none";
+      document.getElementById("site").style.display = "block";
+      iniciarContador();
+    } else {
+      document.getElementById("erro").innerText = "Senha incorreta!";
+    }
+  }
+
+  function iniciarContador() {
+    const dataInicio = new Date();
+    // Começa há 9 meses
+    dataInicio.setMonth(dataInicio.getMonth() - 9);
+
+    function atualizarContador() {
+      const agora = new Date();
+      let diff = agora - dataInicio;
+
+      let segundos = Math.floor(diff / 1000);
+      let minutos = Math.floor(segundos / 60);
+      let horas = Math.floor(minutos / 60);
+      let dias = Math.floor(horas / 24);
+      let meses = Math.floor(dias / 30);
+
+      horas = horas % 24;
+      minutos = minutos % 60;
+      segundos = segundos % 60;
+      dias = dias % 30;
+
+      document.getElementById("contador").innerText =
+        `${meses} meses, ${dias} dias, ${horas}h ${minutos}m ${segundos}s`;
+    }
+
+    atualizarContador();
+    setInterval(atualizarContador, 1000);
+  }
+</script>
+
 </body>
 </html>
